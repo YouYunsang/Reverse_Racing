@@ -31,19 +31,19 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         if (!enabled)
         {
-            Debug.Log("1");
+            //Debug.Log("1");
             return;
         }
 
         if (Time.time < lastHitTime + hitCooldown)
         {
-            Debug.Log("2");
+            //Debug.Log("2");
             return;
         }
 
         if (!obstacle.CompareTag(obstacleTag))
         {
-            Debug.Log("3");
+            //Debug.Log("3");
             return;
         }
 

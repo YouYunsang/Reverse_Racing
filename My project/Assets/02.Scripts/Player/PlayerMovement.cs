@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float knockbackDamping = 12f;
     [SerializeField] private float laneReattachThreshold = 0.15f;
+    [SerializeField] private float finalForwardSpeed;
+    [SerializeField] private float finalLaneSpeed;
 
     private Rigidbody rb;
     private float targetX;
@@ -81,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     public void MoveForward()
     {
         Vector3 velocity = rb.linearVelocity;
-        float finalForwardSpeed = forwardMoveSpeed * boostForwardMultiplier;
+        finalForwardSpeed = forwardMoveSpeed * boostForwardMultiplier;
 
         velocity.z = forwardMoveSpeed + knockbackVelocity.z;
         velocity.x = knockbackVelocity.x;
@@ -104,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleLaneMovement()
     {
         Vector3 position = rb.position;
-        float finalLaneSpeed = laneChangeSpeed * boostLaneMultiplier;
+        finalLaneSpeed = laneChangeSpeed * boostLaneMultiplier;
 
         float newX = Mathf.Lerp(position.x, targetX, finalLaneSpeed * Time.fixedDeltaTime);
         position.x = newX;
