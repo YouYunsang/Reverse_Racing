@@ -23,8 +23,18 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float vfxRange = 1f;
     [SerializeField] private float vfxAngle = 30f;
 
+    [SerializeField] private PlayerBooster playerBooster;
+
     private float lastParryTime = -999f;
     private readonly Collider[] hitBuffer = new Collider[16];
+
+    private void Awake()
+    {
+        if (playerBooster == null)
+        {
+            playerBooster = gameObject.GetComponent<PlayerBooster>();
+        }
+    }
 
     private void Update()
     {
@@ -65,6 +75,11 @@ public class PlayerParry : MonoBehaviour
 
             parryable.OnParried(forward, parryForce, upwardForce, torqueForce);
             hitSomething = true;
+        }
+
+        if (hitSomething && playerBooster != null)
+        {
+            playerBooster.ActivateBoost();
         }
 
         SpawnParryVFX(forward, hitSomething ? Color.yellow : Color.white);

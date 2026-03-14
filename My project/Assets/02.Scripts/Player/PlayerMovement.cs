@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speedRecoverRate = 2f;
     [SerializeField] private float laneRecoverRate = 3f;
 
+    private float boostForwardMultiplier = 1f;
+    private float boostLaneMultiplier = 1f;
+
     private float defaultForwardMoveSpeed;
     private float defaultLaneChangeSpeed;
 
@@ -78,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
     public void MoveForward()
     {
         Vector3 velocity = rb.linearVelocity;
+        float finalForwardSpeed = forwardMoveSpeed * boostForwardMultiplier;
+
         velocity.z = forwardMoveSpeed + knockbackVelocity.z;
         velocity.x = knockbackVelocity.x;
         velocity.y = 0f;
@@ -99,7 +104,9 @@ public class PlayerMovement : MonoBehaviour
     private void HandleLaneMovement()
     {
         Vector3 position = rb.position;
-        float newX = Mathf.Lerp(position.x, targetX, laneChangeSpeed * Time.fixedDeltaTime);
+        float finalLaneSpeed = laneChangeSpeed * boostLaneMultiplier;
+
+        float newX = Mathf.Lerp(position.x, targetX, finalLaneSpeed * Time.fixedDeltaTime);
         position.x = newX;
         rb.MovePosition(position);
     }
@@ -193,5 +200,11 @@ public class PlayerMovement : MonoBehaviour
             Vector3 lanePos = new Vector3(x, transform.position.y, transform.position.z);
             Gizmos.DrawWireSphere(lanePos, 0.2f);
         }
+    }
+
+    public void SetBoostMultipliers(float forwardMultiplier, float laneMultiplier)
+    {
+        boostForwardMultiplier = Mathf.Max(0f, forwardMultiplier);
+        boostLaneMultiplier = Mathf.Max(0f, laneMultiplier);
     }
 }
