@@ -56,7 +56,7 @@ public class TrackChunk : MonoBehaviour
         }
     }
 
-    public Vector3 GetWorldPosition(int lane, int row)
+    public Vector3 GetWorldPosition(int lane, int row, float yPos)
     {
         float x = (lane - 2) * laneWidth;
         float z = row * cellLength;
@@ -66,7 +66,7 @@ public class TrackChunk : MonoBehaviour
             z = -z;
         }
 
-        return transform.position + new Vector3(x, 0, z);
+        return transform.position + new Vector3(x, yPos, z);
     }
 
     public void RegisterObstacle(ObstacleBase obstacle)

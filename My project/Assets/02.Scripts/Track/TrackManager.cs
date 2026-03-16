@@ -13,6 +13,7 @@ public class TrackManager : MonoBehaviour
     [SerializeField] private float removeDistanceBehindPlayer = 30f;
 
     [SerializeField] private ObstacleSpawner obstacleSpawner;
+    [SerializeField] private FuelTankSpawner fuelTankSpawner;
 
     private readonly Queue<TrackChunk> activeChunks = new Queue<TrackChunk>();
     private float nextSpawnZ = 0f;
@@ -58,6 +59,7 @@ public class TrackManager : MonoBehaviour
         nextSpawnZ += chunk.ChunkLength;
 
         obstacleSpawner.SpawnObstacles(chunk);
+        fuelTankSpawner.TrySpawnFuelTank(chunk);
     }
 
     private void MaintainChunks()

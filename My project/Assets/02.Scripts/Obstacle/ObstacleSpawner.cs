@@ -18,13 +18,14 @@ public class ObstacleSpawner : MonoBehaviour
 
             //int length = Random.value < 0.5f ? 2 : 3;
             int length = 2;
+            float yPos = 0.15f;
 
             if (!chunk.IsAreaFree(lane, row, length))
                 continue;
 
             chunk.OccupyArea(lane, row, length);
 
-            Vector3 pos = chunk.GetWorldPosition(lane, row);
+            Vector3 pos = chunk.GetWorldPosition(lane, row, yPos);
 
             Instantiate(obstaclePrefab, pos, Quaternion.identity, chunk.transform);
         }

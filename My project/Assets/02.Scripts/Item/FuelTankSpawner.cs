@@ -36,13 +36,14 @@ public class FuelTankSpawner : MonoBehaviour
 
         int lane = cell.x;
         int row = cell.y;
+        float yPos = 0.4f;
 
         if (!chunk.IsAreaFree(lane, row, 1))
             return;
 
         chunk.OccupyArea(lane, row, 1);
 
-        Vector3 spawnPos = chunk.GetWorldPosition(lane, row);
+        Vector3 spawnPos = chunk.GetWorldPosition(lane, row, yPos);
         FuelTankItem spawnedTank = Instantiate(fuelTankPrefab, spawnPos, Quaternion.identity, chunk.transform);
         spawnedTank.Initialize(this);
 
