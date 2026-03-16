@@ -1297,7 +1297,7 @@ Transform:
   m_GameObject: {fileID: 932546901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: -5.64}
+  m_LocalPosition: {x: 0, y: -0, z: -23.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6605,7 +6605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 0.3137255}
+  m_Color: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6978,7 +6978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9960785, g: 0, b: 0, a: 0.3137255}
+  m_Color: {r: 0.9960785, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12621,10 +12621,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5319814296109393612, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.a
-      value: 0.07058824
-      objectReference: {fileID: 0}
     - target: {fileID: 6426155192136957349, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
       propertyPath: globalVolume
       value: 
@@ -12633,10 +12629,6 @@ PrefabInstance:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 5783482698900233757}
-    - target: {fileID: 9083881598233793631, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.a
-      value: 0.09803922
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12733,8 +12725,8 @@ GameObject:
   - component: {fileID: 5783482698900233757}
   - component: {fileID: 2024078109463012759}
   - component: {fileID: 72072318625132780}
-  - component: {fileID: 8858046892945407198}
   - component: {fileID: 8858046892945407199}
+  - component: {fileID: 8858046892945407200}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12742,19 +12734,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8858046892945407198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8858046892945407197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7232af608eea48145b1ed755e03bb4b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
-  camera2player: 2.4
 --- !u!114 &8858046892945407199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12769,6 +12748,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraShakeController
   defaultDuration: 0.12
   defaultMagnitude: 0.08
+--- !u!114 &8858046892945407200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858046892945407197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7232af608eea48145b1ed755e03bb4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
+  camera2player: 2.4
 --- !u!4 &9148918808650652019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4406004378671871177, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}

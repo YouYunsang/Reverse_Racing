@@ -4,7 +4,7 @@ public class PlayerCamera : MonoBehaviour
 {
     private float playerZPos;
     private float cameraZPos;
-    public float camera2player = 3.2f;
+    public float camera2player = 2.4f;
 
     void Start()
     {

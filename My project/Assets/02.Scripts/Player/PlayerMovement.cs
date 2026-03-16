@@ -7,10 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float laneSpacing = 1f;
 
     [SerializeField] private float laneChangeSpeed = 6f;
-    [SerializeField] private float forwardMoveSpeed = 12f;
+    [SerializeField] private float forwardMoveSpeed = 15f;
 
-    [SerializeField] private float speedRecoverRate = 2f;
-    [SerializeField] private float laneRecoverRate = 3f;
+    [SerializeField] private float speedRecoverRate = 3f;
+    [SerializeField] private float laneRecoverRate = 6f;
 
     private float boostForwardMultiplier = 1f;
     private float boostLaneMultiplier = 1f;
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float defaultLaneChangeSpeed;
 
     [SerializeField] private float knockbackDamping = 12f;
-    [SerializeField] private float laneReattachThreshold = 0.15f;
+    [SerializeField] private float laneReattachThreshold = 0.01f;
     [SerializeField] private float finalForwardSpeed;
     [SerializeField] private float finalLaneSpeed;
 
@@ -221,13 +221,5 @@ public class PlayerMovement : MonoBehaviour
     {
         boostForwardMultiplier = Mathf.Max(0f, forwardMultiplier);
         boostLaneMultiplier = Mathf.Max(0f, laneMultiplier);
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
     }
 }
