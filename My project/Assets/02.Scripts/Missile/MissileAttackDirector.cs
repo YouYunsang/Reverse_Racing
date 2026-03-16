@@ -53,6 +53,9 @@ public class MissileAttackDirector : MonoBehaviour
                 if (GameManager.Instance != null && !GameManager.Instance.IsPlaying())
                     continue;
 
+                if (SpawnGate.Instance != null && !SpawnGate.Instance.IsSpawnAllowed)
+                    continue;
+
                 List<int> selectedLanes = PickLanes();
 
                 await PlayWarnings(selectedLanes, token);

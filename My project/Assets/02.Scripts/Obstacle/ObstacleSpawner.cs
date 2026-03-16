@@ -7,6 +7,9 @@ public class ObstacleSpawner : MonoBehaviour
 
     public void SpawnObstacles(TrackChunk chunk)
     {
+        if (SpawnGate.Instance != null && !SpawnGate.Instance.IsSpawnAllowed)
+            return;
+
         chunk.ResetGrid();
 
         for (int row = 0; row < TrackChunk.RowCount; row++)

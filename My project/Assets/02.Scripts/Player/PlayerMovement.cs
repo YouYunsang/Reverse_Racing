@@ -72,11 +72,26 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.Instance != null && !GameManager.Instance.IsPlaying())
             return;
 
+        if (SpawnGate.Instance != null && !SpawnGate.Instance.IsGameplayStarted)
+            return;
+
         HandleLaneInput();
     }
 
     void FixedUpdate()
     {
+        if (GameManager.Instance != null && !GameManager.Instance.IsPlaying())
+        {
+            rb.linearVelocity = Vector3.zero;
+            return;
+        }
+
+        if (SpawnGate.Instance != null && !SpawnGate.Instance.IsGameplayStarted)
+        {
+            rb.linearVelocity = Vector3.zero;
+            return;
+        }
+
         RecoverMovementStats();
         MoveForward();
         HandleLaneMovement();

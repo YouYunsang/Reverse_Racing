@@ -15,6 +15,9 @@ public class FuelTankSpawner : MonoBehaviour
 
     public void TrySpawnFuelTank(TrackChunk chunk)
     {
+        if (SpawnGate.Instance != null && !SpawnGate.Instance.IsSpawnAllowed)
+            return;
+
         if (chunk == null)
             return;
 
