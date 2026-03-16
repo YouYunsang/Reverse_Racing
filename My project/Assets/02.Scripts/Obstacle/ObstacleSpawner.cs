@@ -16,7 +16,8 @@ public class ObstacleSpawner : MonoBehaviour
 
             int lane = Random.Range(0, TrackChunk.LaneCount);
 
-            int length = Random.value < 0.5f ? 2 : 3;
+            //int length = Random.value < 0.5f ? 2 : 3;
+            int length = 2;
 
             if (!chunk.IsAreaFree(lane, row, length))
                 continue;

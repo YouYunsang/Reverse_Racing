@@ -15,9 +15,12 @@ public class PlayerCollisionHandler : MonoBehaviour
     private PlayerMovement playerMovement;
     private float lastHitTime = -999f;
 
+    private PlayerOverdrive playerOverdrive;
+
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerOverdrive = GetComponent<PlayerOverdrive>();
     }
 
 
@@ -47,6 +50,17 @@ public class PlayerCollisionHandler : MonoBehaviour
             return;
         }
 
+        if (playerOverdrive != null && playerOverdrive.IsOverdriveActive)
+        {
+            Collider col = obstacle.GetComponentInChildren<Collider>();
+            if (col != null)
+            {
+                playerOverdrive.TryParryOnCollision(col);
+                Debug.Log("overdrive collision");
+            }
+            return;
+        }
+
         lastHitTime = Time.time;
 
         Vector3 hitDirection = obstacle.position - transform.position;
@@ -59,6 +73,9 @@ public class PlayerCollisionHandler : MonoBehaviour
         }
 
         Vector3 knokbackDirection = -hitDirection.normalized;
+        knokbackDirection.z *= 0.7f;
+        knokbackDirection = knokbackDirection.normalized;
+
         Vector3 knokbackVelocity = knokbackDirection * knockbackSpeed;
 
         playerMovement.AddKnockback(knokbackVelocity);

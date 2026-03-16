@@ -10,11 +10,15 @@ public class PlayerBooster : MonoBehaviour
 
     [SerializeField] private float boostDuration = 1.2f;
     [SerializeField] private float boostAddAmount = 0.5f;
-    //[SerializeField] private float maxBoostTime = 2.5f;
 
-    [SerializeField] private float normalFov = 60f;
-    [SerializeField] private float boostedFov = 72f;
+    [SerializeField] private float normalFOV = 60f;
+    [SerializeField] private float boostedFOV = 72f;
     [SerializeField] private float fovLerpSpeed = 8f;
+
+    private bool isOverdriveActive = false;
+    private float overdriveForwardMultiplier = 1f;
+    private float overdriveLaneMultiplier = 1f;
+    private float overdriveFOV = 60f;
 
     private float boostTimer = 0f;
     private bool isBoosting = false;
@@ -56,6 +60,24 @@ public class PlayerBooster : MonoBehaviour
         }
     }
 
+    public void SetOverdriveState(bool active, float forwardMultiplier, float laneMultiplier, float targetFov)
+    {
+        isOverdriveActive = active;
+
+        if (active)
+        {
+            overdriveForwardMultiplier = forwardMultiplier;
+            overdriveLaneMultiplier = laneMultiplier;
+            overdriveFOV = targetFov;
+        }
+        else
+        {
+            overdriveForwardMultiplier = 1f;
+            overdriveLaneMultiplier = 1f;
+            overdriveFOV = normalFOV;
+        }
+    }
+
     private void UpdateBoostTimer()
     {
         if (!isBoosting) return;
@@ -71,19 +93,41 @@ public class PlayerBooster : MonoBehaviour
 
     private void ApplyBoostToMovement()
     {
+        float forwardMult = 1f;
+        float laneMult = 1f;
+
         if (isBoosting)
         {
-            playerMovement.SetBoostMultipliers(boostForwardMulti, boostLaneMulti);
+            forwardMult *= boostForwardMulti;
+            laneMult *= boostLaneMulti;
+        }
+        else if (isOverdriveActive)
+        {
+            forwardMult *= overdriveForwardMultiplier;
+            laneMult *= overdriveLaneMultiplier;
         }
         else
         {
             playerMovement.SetBoostMultipliers(1f, 1f);
         }
+        
+        playerMovement.SetBoostMultipliers(forwardMult, laneMult);
     }
 
     private void UpdateCameraFOV()
     {
-        float targetFov = isBoosting ? boostedFov : normalFov;
+        float targetFov = normalFOV;
+
+        if (isBoosting)
+        {
+            targetFov = boostedFOV;
+        }
+
+        if (isOverdriveActive)
+        {
+            targetFov = overdriveFOV;
+        }
+
         targetCamera.fieldOfView = Mathf.Lerp(targetCamera.fieldOfView, targetFov, fovLerpSpeed * Time.deltaTime);
     }
 }

@@ -74,13 +74,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Missile
   moveSpeed: 20
-  lifeTime: 5
+  lifeTime: 2
   playerTag: Player
+  obstacleTag: Obstacle
   obstacleCollideForce: 10
   obstacleUpwardForce: 4
   obstacleTorqueForce: 12
+  fuelDamageOnHit: 15
   parriedMoveSpeed: 24
   parriedLifeTime: 3
+  gaugeRewardAmount: 3
 --- !u!1 &739470696417327878
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +113,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393646723453373829}

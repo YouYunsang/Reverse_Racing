@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissileLaneWarning
   warningVisual: {fileID: 6003007288803655408}
+  warning2player: 1.59
 --- !u!1 &2301515883641826826
 GameObject:
   m_ObjectHideFlags: 0

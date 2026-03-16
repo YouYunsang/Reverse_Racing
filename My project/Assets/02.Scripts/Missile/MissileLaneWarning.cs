@@ -5,6 +5,7 @@ public class MissileLaneWarning : MonoBehaviour
     [SerializeField] private GameObject warningVisual;
     private float playerZPos;
     private float warningZPos;
+    public float warning2player = 1.59f;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class MissileLaneWarning : MonoBehaviour
     private void Update()
     {
         playerZPos = PlayerMovement.Instance.transform.position.z;
-        warningZPos = playerZPos - 0.95f;
+        warningZPos = playerZPos - warning2player;
         transform.position = new Vector3(transform.position.x, transform.position.y, warningZPos);
     }
 

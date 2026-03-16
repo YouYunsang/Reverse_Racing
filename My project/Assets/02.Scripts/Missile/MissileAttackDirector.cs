@@ -131,7 +131,7 @@ public class MissileAttackDirector : MonoBehaviour
         if(mainCamera == null) return PlayerMovement.Instance.transform.position.z - fallbackSpawnBehindDistance;
 
         Plane groundPlane = new Plane(Vector3.up, new Vector3(0f, groundY, 0f));
-        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, -0.1f, 0f));
+        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, -0.5f, 0f));
 
         if(groundPlane.Raycast(ray, out float enter))
         {

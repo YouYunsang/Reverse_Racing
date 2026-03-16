@@ -3,11 +3,11 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-public class Missile : MonoBehaviour, IParryable
+public class Missile : MonoBehaviour, IParryable, IParryGaugeReward
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 20f;
-    [SerializeField] private float lifeTime = 5f;
+    [SerializeField] private float lifeTime = 2f;
 
     [Header("Tags")]
     [SerializeField] private string playerTag = "Player";
@@ -23,6 +23,8 @@ public class Missile : MonoBehaviour, IParryable
     [Header("Parried Missile")]
     [SerializeField] private float parriedMoveSpeed = 24f;
     [SerializeField] private float parriedLifeTime = 3f;
+
+    [SerializeField] private int gaugeRewardAmount = 3;
 
     private bool isActiveMissile = false;
     private bool isParried = false;
@@ -75,6 +77,11 @@ public class Missile : MonoBehaviour, IParryable
 
         // 패링된 미사일은 너무 오래 남지 않게 별도 수명 사용
         RestartLifeTimer(parriedLifeTime);
+    }
+
+    public int GetGaugeRewardAmount()
+    {
+        return gaugeRewardAmount;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -4,6 +4,7 @@ public class PlayerCamera : MonoBehaviour
 {
     private float playerZPos;
     private float cameraZPos;
+    public float camera2player = 3.2f;
 
     void Start()
     {
@@ -13,7 +14,7 @@ public class PlayerCamera : MonoBehaviour
     void LateUpdate()
     {
         playerZPos = PlayerMovement.Instance.transform.position.z;
-        cameraZPos = playerZPos - 2.285f;
+        cameraZPos = playerZPos - camera2player;
         transform.position = new Vector3(transform.position.x, transform.position.y, cameraZPos);
     }
 }
