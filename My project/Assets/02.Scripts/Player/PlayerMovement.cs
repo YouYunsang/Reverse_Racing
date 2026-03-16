@@ -29,13 +29,26 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 knockbackVelocity;
     private bool wasInKnockback;
 
+    public int LaneCount => laneCount;
+
     public int CurrentLane => currentLane;
     public float ForwardMoveSpeed => forwardMoveSpeed;
     public float LaneChangeSpeed => laneChangeSpeed;
     public Rigidbody RB => rb;
 
+    public static PlayerMovement Instance { get; private set; }
+
     private void Awake()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         rb = GetComponent<Rigidbody>();
     }
 
@@ -185,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private float GetLaneWorldX(int laneIndex)
+    public float GetLaneWorldX(int laneIndex)
     {
         float centerOffset = (laneCount - 1) * 0.5f;
         return (laneIndex - centerOffset) * laneSpacing;
