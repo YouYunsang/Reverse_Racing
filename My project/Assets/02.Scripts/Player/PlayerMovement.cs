@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public float ForwardMoveSpeed => forwardMoveSpeed;
     public float LaneChangeSpeed => laneChangeSpeed;
     public Rigidbody RB => rb;
+    public float DefaultForwardMoveSpeed => defaultForwardMoveSpeed;
+    public float DefaultLaneChangeSpeed => defaultLaneChangeSpeed;
 
     public static PlayerMovement Instance { get; private set; }
 
@@ -221,5 +223,28 @@ public class PlayerMovement : MonoBehaviour
     {
         boostForwardMultiplier = Mathf.Max(0f, forwardMultiplier);
         boostLaneMultiplier = Mathf.Max(0f, laneMultiplier);
+    }
+
+    public void SetForwardMoveSpeed(float newSpeed)
+    {
+        forwardMoveSpeed = Mathf.Max(0f, newSpeed);
+    }
+
+    public void SetLaneChangeSpeed(float newSpeed)
+    {
+        laneChangeSpeed = Mathf.Max(0f, newSpeed);
+    }
+
+    public void StopAllMovementImmediate()
+    {
+        forwardMoveSpeed = 0f;
+        laneChangeSpeed = 0f;
+        knockbackVelocity = Vector3.zero;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 }

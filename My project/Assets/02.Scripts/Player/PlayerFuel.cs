@@ -7,6 +7,8 @@ public class PlayerFuel : MonoBehaviour
     [SerializeField] private float currentFuel;
     [SerializeField] private float fuelDrainPerSecond = 1f;
 
+    [SerializeField] private GameOverController gameOverController;
+
     public float MaxFuel => maxFuel;
     public float CurrentFuel => currentFuel;
     public float FuelNormalized => maxFuel <= 0f ? 0f : currentFuel / maxFuel;
@@ -14,6 +16,14 @@ public class PlayerFuel : MonoBehaviour
     public event Action<float, float> OnFuelChanged;
 
     private bool isGameOverTriggered = false;
+
+    private void Awake()
+    {
+        if (gameOverController == null)
+        {
+            gameOverController = GetComponent<GameOverController>();
+        }
+    }
 
     private void Start()
     {
@@ -48,6 +58,11 @@ public class PlayerFuel : MonoBehaviour
             isGameOverTriggered = true;
 
             GameManager.Instance.GameOver();
+
+            if (gameOverController != null)
+            {
+                gameOverController.StartGameOverSequence();
+            }
 
             Debug.Log("연료가 모두 소모되어 게임 오버");
         }
