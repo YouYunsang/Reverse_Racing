@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward
+public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffectProvider
 {
     [Header("Grid Size")]
     [SerializeField] protected int width = 1;
@@ -31,12 +31,26 @@ public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward
         return gaugeRewardAmount;
     }
 
+    public ParryEffectType GetParryEffectType()
+    {
+        return ParryEffectType.SmallImpact;
+    }
+
     public void OnParried(Vector3 parryDirection, float parryForce, float upwardForce, float torqueForce)
     {
         if (isParried)
             return;
 
         isParried = true;
+
+        if (ParryEffectManager.Instance != null)
+        {
+            ParryEffectManager.Instance.PlayEffect(
+                GetParryEffectType(),
+                transform.position + Vector3.forward,
+                Quaternion.LookRotation(parryDirection)
+            );
+        }
 
         // 플레이어와 바로 다시 충돌하지 않게 막기
         for (int i = 0; i < colliders.Length; i++)

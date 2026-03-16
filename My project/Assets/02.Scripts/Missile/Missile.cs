@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-public class Missile : MonoBehaviour, IParryable, IParryGaugeReward
+public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffectProvider
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 20f;
@@ -59,6 +59,11 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 
+    public ParryEffectType GetParryEffectType()
+    {
+        return ParryEffectType.MissileImpact;
+    }
+
     public void OnParried(Vector3 parryDirection, float parryForce, float upwardForce, float torqueForce)
     {
         if (!isActiveMissile)
@@ -68,6 +73,15 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward
             return;
 
         isParried = true;
+
+        if (ParryEffectManager.Instance != null)
+        {
+            ParryEffectManager.Instance.PlayEffect(
+                GetParryEffectType(),
+                transform.position + Vector3.forward,
+                Quaternion.LookRotation(parryDirection)
+            );
+        }
 
         // 패링 방향으로 미사일 진행 방향 전환
         moveDirection = parryDirection.normalized;
