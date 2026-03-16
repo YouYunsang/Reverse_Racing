@@ -222,4 +222,12 @@ public class PlayerMovement : MonoBehaviour
         boostForwardMultiplier = Mathf.Max(0f, forwardMultiplier);
         boostLaneMultiplier = Mathf.Max(0f, laneMultiplier);
     }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
 }

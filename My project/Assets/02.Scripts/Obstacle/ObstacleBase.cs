@@ -43,6 +43,11 @@ public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward, IParry
 
         isParried = true;
 
+        if (CameraShakeController.Instance != null)
+        {
+            CameraShakeController.Instance.PlayShake(0.12f, 0.08f);
+        }
+
         if (ParryEffectManager.Instance != null)
         {
             ParryEffectManager.Instance.PlayEffect(

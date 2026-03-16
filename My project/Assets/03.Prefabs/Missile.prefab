@@ -82,7 +82,7 @@ MonoBehaviour:
   obstacleTorqueForce: 12
   fuelDamageOnHit: 15
   parriedMoveSpeed: 24
-  parriedLifeTime: 3
+  parriedLifeTime: 1.5
   gaugeRewardAmount: 3
 --- !u!1 &739470696417327878
 GameObject:

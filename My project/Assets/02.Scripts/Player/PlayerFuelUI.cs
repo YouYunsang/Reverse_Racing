@@ -7,7 +7,6 @@ public class PlayerFuelUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerFuel playerFuel;
     [SerializeField] private Slider fuelSlider;
-    [SerializeField] private TMP_Text fuelText;
 
     private void Awake()
     {
@@ -47,11 +46,6 @@ public class PlayerFuelUI : MonoBehaviour
         {
             fuelSlider.maxValue = maxFuel;
             fuelSlider.value = currentFuel;
-        }
-
-        if (fuelText != null)
-        {
-            fuelText.text = $"{Mathf.CeilToInt(currentFuel)} / {Mathf.CeilToInt(maxFuel)}";
         }
     }
 }

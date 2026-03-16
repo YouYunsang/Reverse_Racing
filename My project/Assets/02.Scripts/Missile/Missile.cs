@@ -22,7 +22,7 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffec
 
     [Header("Parried Missile")]
     [SerializeField] private float parriedMoveSpeed = 24f;
-    [SerializeField] private float parriedLifeTime = 3f;
+    [SerializeField] private float parriedLifeTime = 1.5f;
 
     [SerializeField] private int gaugeRewardAmount = 3;
 
@@ -44,7 +44,7 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffec
         lifeTime = newLifeTime;
 
         isActiveMissile = true;
-        isParried = false;
+        //isParried = false;
 
         moveDirection = transform.forward;
 
@@ -72,7 +72,10 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffec
         if (isParried)
             return;
 
-        isParried = true;
+        if (CameraShakeController.Instance != null)
+        {
+            CameraShakeController.Instance.PlayShake(0.12f, 0.08f);
+        }
 
         if (ParryEffectManager.Instance != null)
         {
@@ -103,41 +106,31 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffec
         if (!isActiveMissile)
             return;
 
-        if (!isParried)
-        {
-            if (other.CompareTag(playerTag))
-            {
-                PlayerFuel playerFuel = other.GetComponentInParent<PlayerFuel>();
-                if (playerFuel != null)
-                {
-                    playerFuel.ConsumeFuel(fuelDamageOnHit);
-                }
-
-                DestroyMissile();
-                return;
-            }
-
-            IParryable parryable = other.GetComponentInParent<IParryable>();
-
-            if (parryable != null && other.CompareTag(obstacleTag)) //parryable != (IParryable)this
-            {
-                parryable.OnParried(
-                    moveDirection,
-                    obstacleCollideForce,
-                    obstacleUpwardForce,
-                    obstacleTorqueForce
-                );
-            }
-
-            return;
-        }
-
-        // 패링 후 미사일은 장애물을 날려버린다
         if (other.CompareTag(playerTag))
         {
-            // 패링된 미사일은 플레이어를 다시 맞추지 않도록 무시
+            PlayerFuel playerFuel = other.GetComponentInParent<PlayerFuel>();
+            if (playerFuel != null)
+            {
+                playerFuel.ConsumeFuel(fuelDamageOnHit);
+            }
+
+            DestroyMissile();
             return;
         }
+
+        IParryable parryable = other.GetComponentInParent<IParryable>();
+
+        if (parryable != null && other.CompareTag(obstacleTag)) //parryable != (IParryable)this
+        {
+            parryable.OnParried(
+                moveDirection,
+                obstacleCollideForce,
+                obstacleUpwardForce,
+                obstacleTorqueForce
+            );
+        }
+
+        return;
     }
 
     private void RestartLifeTimer(float delaySeconds)

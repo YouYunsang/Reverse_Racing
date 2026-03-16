@@ -27,8 +27,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.10565, y: -0, z: 1.26545}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3247146541383124218}
   m_Father: {fileID: 0}
@@ -47,6 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissileLaneWarning
   warningVisual: {fileID: 6003007288803655408}
   warning2player: 1.59
+  blinkDuration: 1.5
+  blinkInterval: 0.12
+  shakeDuration: 0.5
+  shakeMagnitude: 0.08
+  shakeFrequency: 40
 --- !u!1 &2301515883641826826
 GameObject:
   m_ObjectHideFlags: 0

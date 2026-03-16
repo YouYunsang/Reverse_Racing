@@ -10,9 +10,9 @@ public class MissileAttackDirector : MonoBehaviour
     [SerializeField] private Missile missilePrefab;
     [SerializeField] private MissileLaneWarning[] laneWarnings;
 
-    [SerializeField] private float minSpawnInterval = 4f;
-    [SerializeField] private float maxSpawnInterval = 10f;
-    [SerializeField] private float warningDuration = 2f;
+    [SerializeField] private float minSpawnInterval = 2f;
+    [SerializeField] private float maxSpawnInterval = 8f;
+    //[SerializeField] private float warningDuration = 2f;
 
     [SerializeField, Range(0.1f, 1f)] private float minLaneFireChance = 0.1f;
     [SerializeField, Range(0.1f, 1f)] private float maxLaneFireChance = 0.5f;
@@ -50,19 +50,41 @@ public class MissileAttackDirector : MonoBehaviour
                 float interval = UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval);
                 await UniTask.Delay(TimeSpan.FromSeconds(interval), cancellationToken: token);
 
-                if (GameManager.Instance != null && !GameManager.Instance.IsPlaying()) continue;
+                if (GameManager.Instance != null && !GameManager.Instance.IsPlaying())
+                    continue;
 
                 List<int> selectedLanes = PickLanes();
 
-                ShowWarnings(selectedLanes, true);
-                await UniTask.Delay(TimeSpan.FromSeconds(warningDuration), cancellationToken: token);
-                ShowWarnings(selectedLanes, false);
+                await PlayWarnings(selectedLanes, token);
 
                 FireMissiles(selectedLanes);
             }
         }
         catch (OperationCanceledException)
         {
+        }
+    }
+
+    private async UniTask PlayWarnings(List<int> lanes, CancellationToken token)
+    {
+        if (laneWarnings == null)
+            return;
+
+        List<UniTask> tasks = new List<UniTask>();
+
+        for (int i = 0; i < lanes.Count; i++)
+        {
+            int lane = lanes[i];
+
+            if (lane >= 0 && lane < laneWarnings.Length && laneWarnings[lane] != null)
+            {
+                tasks.Add(laneWarnings[lane].PlayWarningSequence(token));
+            }
+        }
+
+        if (tasks.Count > 0)
+        {
+            await UniTask.WhenAll(tasks);
         }
     }
 
@@ -88,29 +110,12 @@ public class MissileAttackDirector : MonoBehaviour
         return selected;
     }
 
-    private void ShowWarnings(List<int> lanes, bool visible)
-    {
-        if (laneWarnings == null) return;
-
-        for (int i = 0; i < laneWarnings.Length; i++)
-        {
-            if (laneWarnings[i] != null) laneWarnings[i].SetVisible(false);
-        }
-
-        if (!visible) return;
-
-        for (int i = 0; i < lanes.Count; i++)
-        {
-            int lane = lanes[i];
-            if (lane >= 0 && lane < laneWarnings.Length && laneWarnings[lane] != null)
-            {
-                laneWarnings[lane].SetVisible(true);
-            }
-        }
-    }
-
     private void FireMissiles(List<int> lanes)
     {
+        if (PlayerMovement.Instance == null)
+            return;
+
+
         float spawnZ = GetMissileSpawnZ();
 
         for (int i = 0; i < lanes.Count; i++)
