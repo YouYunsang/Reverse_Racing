@@ -2,22 +2,13 @@ using UnityEngine;
 
 public class PlayerParry : MonoBehaviour
 {
-    private enum ParryDirectionMode
-    {
-        Forward, Backward
-
-    }
     [Header("Input")]
-    [SerializeField] private readonly KeyCode parryKey = KeyCode.Space;
-    [SerializeField] private readonly KeyCode forwardDirectionKey = KeyCode.UpArrow;
-    [SerializeField] private readonly KeyCode backwardDirectionKey = KeyCode.DownArrow;
+    [SerializeField] private KeyCode parryKey = KeyCode.Space;
 
     [Header("Parry Detection")]
     [SerializeField] private LayerMask parryableLayer;
     [SerializeField] private Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, 1f);
-    //패링 박스의 중심과 플레이어 중심 사이의 거리
     [SerializeField] private float forwardOffset = 1f;
-    [SerializeField] private float backwardOffset = 1f;
     [SerializeField] private float parryCooldown = 0.2f;
 
     [Header("Parry Force")]
@@ -32,9 +23,6 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float vfxAngle = 30f;
 
     [SerializeField] private PlayerBooster playerBooster;
-
-    [SerializeField] private ParryDirectionMode currentDirectionMode = ParryDirectionMode.Forward;
-
     [SerializeField] private PlayerParryGauge playerParryGauge;
 
     private float lastParryTime = -999f;
@@ -44,10 +32,10 @@ public class PlayerParry : MonoBehaviour
     {
         if (playerBooster == null)
         {
-            playerBooster = gameObject.GetComponent<PlayerBooster>();
+            playerBooster = GetComponent<PlayerBooster>();
         }
 
-        if(playerParryGauge == null)
+        if (playerParryGauge == null)
         {
             playerParryGauge = GetComponent<PlayerParryGauge>();
         }
@@ -62,33 +50,26 @@ public class PlayerParry : MonoBehaviour
         {
             TryParry();
         }
-
-        HandleDirectionInput();
-    }
-
-    private void HandleDirectionInput()
-    {
-        if (Input.GetKeyDown(forwardDirectionKey))
-        {
-            currentDirectionMode = ParryDirectionMode.Forward;
-        }
-        else if (Input.GetKeyDown(backwardDirectionKey))
-        {
-            currentDirectionMode = ParryDirectionMode.Backward;
-        }
     }
 
     private void TryParry()
     {
-        if (Time.time < lastParryTime + parryCooldown) return;
+        if (Time.time < lastParryTime + parryCooldown)
+            return;
+
         lastParryTime = Time.time;
 
-        Vector3 parryDirection = GetCurrentParryDirection();
-        // offset 변수 정상 적용
-        float offset = currentDirectionMode == ParryDirectionMode.Forward ? forwardOffset : backwardOffset;
-        Vector3 center = transform.position + parryDirection * offset;
+        Vector3 parryDirection = transform.forward;
+        Vector3 center = transform.position + parryDirection * forwardOffset;
 
-        int hitCount = Physics.OverlapBoxNonAlloc(center, boxHalfExtents, hitBuffer, transform.rotation, parryableLayer);
+        int hitCount = Physics.OverlapBoxNonAlloc(
+            center,
+            boxHalfExtents,
+            hitBuffer,
+            transform.rotation,
+            parryableLayer
+        );
+
         bool hitSomething = false;
         int totalGaugeReward = 0;
 
@@ -103,36 +84,26 @@ public class PlayerParry : MonoBehaviour
             parryable.OnParried(parryDirection, parryForce, upwardForce, torqueForce);
             hitSomething = true;
 
-            // 인터페이스 형변환으로 보상 획득
             if (parryable is IParryGaugeReward gaugeReward)
             {
-                int reward = gaugeReward.GetGaugeRewardAmount();
-                totalGaugeReward += reward;
-                Debug.Log($"보상 획득 예정: {reward}, 누적: {totalGaugeReward}");
+                totalGaugeReward += gaugeReward.GetGaugeRewardAmount();
             }
         }
 
         if (hitSomething)
         {
-            if (playerBooster != null) playerBooster.ActivateBoost();
+            if (playerBooster != null)
+            {
+                playerBooster.ActivateBoost();
+            }
 
             if (playerParryGauge != null && totalGaugeReward > 0)
             {
                 playerParryGauge.AddGauge(totalGaugeReward);
-                Debug.Log($"게이지 {totalGaugeReward} 증가 완료!");
-            }
-            else if (playerParryGauge == null)
-            {
-                Debug.LogError("PlayerParryGauge 참조가 비어있습니다!");
             }
         }
 
         SpawnParryVFX(parryDirection, hitSomething ? Color.yellow : Color.white);
-    }
-
-    private Vector3 GetCurrentParryDirection()
-    {
-        return currentDirectionMode == ParryDirectionMode.Forward ? transform.forward : -transform.forward;
     }
 
     private void SpawnParryVFX(Vector3 forward, Color color)
@@ -140,7 +111,12 @@ public class PlayerParry : MonoBehaviour
         if (parryMeshPrefab == null)
             return;
 
-        ParryMesh parryMesh = Instantiate(parryMeshPrefab, transform.position, Quaternion.LookRotation(forward));
+        ParryMesh parryMesh = Instantiate(
+            parryMeshPrefab,
+            transform.position,
+            Quaternion.LookRotation(forward)
+        );
+
         parryMesh.Setup(vfxRange, vfxAngle, vfxLifeTime, color);
     }
 

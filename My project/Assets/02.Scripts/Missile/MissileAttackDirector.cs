@@ -19,7 +19,9 @@ public class MissileAttackDirector : MonoBehaviour
 
     [SerializeField] private float missileExtraSpeed = 8f;
     [SerializeField] private float missileLifeTime = 5f;
-    [SerializeField] private float fallbackSpawnBehindDistance = 25f;
+
+    [Header("Spawn Position")]
+    [SerializeField] private float spawnForwardDistance = 40f;
     [SerializeField] private float groundY = 0f;
 
     private CancellationToken destroyToken;
@@ -28,7 +30,7 @@ public class MissileAttackDirector : MonoBehaviour
     {
         destroyToken = this.GetCancellationTokenOnDestroy();
 
-        if(mainCamera == null)
+        if (mainCamera == null)
         {
             mainCamera = Camera.main;
         }
@@ -76,7 +78,7 @@ public class MissileAttackDirector : MonoBehaviour
             {
                 float chance = UnityEngine.Random.Range(minLaneFireChance, maxLaneFireChance);
 
-                if(UnityEngine.Random.value <= chance)
+                if (UnityEngine.Random.value <= chance)
                 {
                     selected.Add(lane);
                 }
@@ -119,26 +121,21 @@ public class MissileAttackDirector : MonoBehaviour
             Vector3 spawnPos = new Vector3(laneX, groundY, spawnZ);
 
             Missile missile = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
-            missile.transform.forward = Vector3.forward;
 
-            float missileSpeed = Mathf.Max(PlayerMovement.Instance.ForwardMoveSpeed + missileExtraSpeed, PlayerMovement.Instance.ForwardMoveSpeed + 1f);
+            // 플레이어를 향해 날아오도록 뒤쪽 방향 설정
+            missile.transform.forward = Vector3.back;
+
+            float missileSpeed = Mathf.Max(
+                PlayerMovement.Instance.ForwardMoveSpeed + missileExtraSpeed,
+                PlayerMovement.Instance.ForwardMoveSpeed + 1f
+            );
+
             missile.Initialize(missileSpeed, missileLifeTime);
         }
     }
 
     private float GetMissileSpawnZ()
     {
-        if(mainCamera == null) return PlayerMovement.Instance.transform.position.z - fallbackSpawnBehindDistance;
-
-        Plane groundPlane = new Plane(Vector3.up, new Vector3(0f, groundY, 0f));
-        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, -0.5f, 0f));
-
-        if(groundPlane.Raycast(ray, out float enter))
-        {
-            Vector3 hitPoint = ray.GetPoint(enter);
-            return hitPoint.z;
-        }
-
-        return PlayerMovement.Instance.transform.position.z - fallbackSpawnBehindDistance;
+        return PlayerMovement.Instance.transform.position.z + spawnForwardDistance;
     }
 }
