@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffectProvider
+public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffectProvider, IParryScoreReward
 {
     [Header("Grid Size")]
     [SerializeField] protected int width = 1;
     [SerializeField] protected int height = 2;
     [SerializeField] private int gaugeRewardAmount = 1;
+
+    [SerializeField] private int parryScoreReward = 100;
 
     public int Width => width;
     public int Height => height;
@@ -24,6 +26,11 @@ public class ObstacleBase : MonoBehaviour, IParryable, IParryGaugeReward, IParry
 
         if (colliders == null || colliders.Length == 0)
             colliders = GetComponentsInChildren<Collider>();
+    }
+
+    public int GetParryScoreReward()
+    {
+        return parryScoreReward;
     }
 
     public int GetGaugeRewardAmount()

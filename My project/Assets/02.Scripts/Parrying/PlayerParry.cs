@@ -28,6 +28,8 @@ public class PlayerParry : MonoBehaviour
     private float lastParryTime = -999f;
     private readonly Collider[] hitBuffer = new Collider[16];
 
+    [SerializeField] private PlayerScoreSystem playerScoreSystem;
+
     private void Awake()
     {
         if (playerBooster == null)
@@ -38,6 +40,11 @@ public class PlayerParry : MonoBehaviour
         if (playerParryGauge == null)
         {
             playerParryGauge = GetComponent<PlayerParryGauge>();
+        }
+
+        if (playerScoreSystem == null)
+        {
+            playerScoreSystem = GetComponent<PlayerScoreSystem>();
         }
     }
 
@@ -72,6 +79,7 @@ public class PlayerParry : MonoBehaviour
 
         bool hitSomething = false;
         int totalGaugeReward = 0;
+        int totalScoreReward = 0;
 
         for (int i = 0; i < hitCount; i++)
         {
@@ -88,6 +96,11 @@ public class PlayerParry : MonoBehaviour
             {
                 totalGaugeReward += gaugeReward.GetGaugeRewardAmount();
             }
+
+            if (parryable is IParryScoreReward scoreReward)
+            {
+                totalScoreReward += scoreReward.GetParryScoreReward();
+            }
         }
 
         if (hitSomething)
@@ -100,6 +113,11 @@ public class PlayerParry : MonoBehaviour
             if (playerParryGauge != null && totalGaugeReward > 0)
             {
                 playerParryGauge.AddGauge(totalGaugeReward);
+            }
+
+            if (playerScoreSystem != null && totalScoreReward > 0)
+            {
+                playerScoreSystem.AddParryScore(totalScoreReward);
             }
         }
 

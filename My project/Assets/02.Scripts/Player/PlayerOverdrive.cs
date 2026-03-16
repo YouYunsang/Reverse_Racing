@@ -6,6 +6,7 @@ public class PlayerOverdrive : MonoBehaviour
 
     [SerializeField] private PlayerParryGauge playerParryGauge;
     [SerializeField] private PlayerBooster playerBooster;
+    [SerializeField] private PlayerScoreSystem playerScoreSystem;
 
     [SerializeField] private int requiredGauge = 10;
     [SerializeField] private float gaugeConsumeInterval = 0.15f;
@@ -30,6 +31,9 @@ public class PlayerOverdrive : MonoBehaviour
 
         if (playerBooster == null)
             playerBooster = GetComponent<PlayerBooster>();
+
+        if (playerScoreSystem == null)
+            playerScoreSystem = GetComponent<PlayerScoreSystem>();
     }
 
     private void Update()
@@ -113,6 +117,8 @@ public class PlayerOverdrive : MonoBehaviour
         if (other == null)
             return;
 
+        Transform root = other.transform.root;
+
         IParryable parryable = other.GetComponentInParent<IParryable>();
         if (parryable == null)
         {
@@ -125,5 +131,14 @@ public class PlayerOverdrive : MonoBehaviour
             collisionUpwardForce,
             collisionTorqueForce
         );
+
+        if (playerScoreSystem != null)
+        {
+            IParryScoreReward scoreReward = root.GetComponentInChildren<IParryScoreReward>();
+            if (scoreReward != null)
+            {
+                playerScoreSystem.AddParryScore(scoreReward.GetParryScoreReward());
+            }
+        }
     }
 }

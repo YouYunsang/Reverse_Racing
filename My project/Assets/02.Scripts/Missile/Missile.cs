@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffectProvider
+public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffectProvider, IParryScoreReward
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 20f;
@@ -25,6 +25,8 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffec
     [SerializeField] private float parriedLifeTime = 1.5f;
 
     [SerializeField] private int gaugeRewardAmount = 3;
+
+    [SerializeField] private int parryScoreReward = 500;
 
     private bool isActiveMissile = false;
     private bool isParried = false;
@@ -57,6 +59,11 @@ public class Missile : MonoBehaviour, IParryable, IParryGaugeReward, IParryEffec
             return;
 
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
+    }
+
+    public int GetParryScoreReward()
+    {
+        return parryScoreReward;
     }
 
     public ParryEffectType GetParryEffectType()
