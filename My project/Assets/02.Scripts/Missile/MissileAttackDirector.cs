@@ -14,8 +14,8 @@ public class MissileAttackDirector : MonoBehaviour
     [SerializeField] private float maxSpawnInterval = 8f;
     //[SerializeField] private float warningDuration = 2f;
 
-    [SerializeField, Range(0.1f, 1f)] private float minLaneFireChance = 0.1f;
-    [SerializeField, Range(0.1f, 1f)] private float maxLaneFireChance = 0.5f;
+    [SerializeField, Range(0.1f, 1f)] private float defaultMinLaneFireChance = 0.1f;
+    [SerializeField, Range(0.1f, 1f)] private float defaultMaxLaneFireChance = 0.5f;
 
     [SerializeField] private float missileExtraSpeed = 8f;
     [SerializeField] private float missileLifeTime = 5f;
@@ -95,13 +95,22 @@ public class MissileAttackDirector : MonoBehaviour
     {
         List<int> selected = new List<int>();
 
+        float currentMinChance = defaultMinLaneFireChance;
+        float currentMaxChance = defaultMaxLaneFireChance;
+
+        if (DifficultyManager.Instance != null)
+        {
+            currentMinChance = DifficultyManager.Instance.CurrentMissileMinChance;
+            currentMaxChance = DifficultyManager.Instance.CurrentMissileMaxChance;
+        }
+
         while (selected.Count == 0)
         {
             selected.Clear();
 
             for (int lane = 0; lane < PlayerMovement.Instance.LaneCount; lane++)
             {
-                float chance = UnityEngine.Random.Range(minLaneFireChance, maxLaneFireChance);
+                float chance = UnityEngine.Random.Range(currentMinChance, currentMaxChance);
 
                 if (UnityEngine.Random.value <= chance)
                 {

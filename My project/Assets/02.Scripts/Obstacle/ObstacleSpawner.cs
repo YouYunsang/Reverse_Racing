@@ -2,19 +2,27 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    [SerializeField] private float spawnRate = 0.2f;
+    [SerializeField] private float defaultSpawnRate = 0.2f;
     public GameObject obstaclePrefab;
+    [SerializeField] private float currentSpawnRate;
 
     public void SpawnObstacles(TrackChunk chunk)
     {
         if (SpawnGate.Instance != null && !SpawnGate.Instance.IsSpawnAllowed)
             return;
 
+        currentSpawnRate = defaultSpawnRate;
+
+        if (DifficultyManager.Instance != null)
+        {
+            currentSpawnRate = DifficultyManager.Instance.CurrentObstacleSpawnRate;
+        }
+
         chunk.ResetGrid();
 
         for (int row = 0; row < TrackChunk.RowCount; row++)
         {
-            if (Random.value > spawnRate)
+            if (Random.value > currentSpawnRate)
                 continue;
 
             int lane = Random.Range(0, TrackChunk.LaneCount);

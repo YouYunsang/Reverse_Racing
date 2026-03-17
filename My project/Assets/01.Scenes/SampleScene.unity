@@ -168,6 +168,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &79452690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 79452691}
+  - component: {fileID: 79452692}
+  m_Layer: 0
+  m_Name: DifficultyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &79452691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79452690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1644137777}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &79452692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79452690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e8f5ef5d7613d4eade78d3ccffbead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DifficultyManager
+  playerTransform: {fileID: 9148918808650652019}
+  obstacleBaseSpawnRate: 0.2
+  obstacleIncreasePerStep: 0.02
+  obstacleMaxSpawnRate: 0.3
+  missileBaseMinChance: 0.1
+  missileIncreasePerStep: 0.03
+  missileMaxMinChance: 0.35
+  missileMaxChance: 0.5
+  distancePerStep: 500
 --- !u!1 &88437562
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,8 +566,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6350f503374eab94e86d89ee5afd671f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawner
-  spawnRate: 0.2
+  defaultSpawnRate: 0.2
   obstaclePrefab: {fileID: 1952767881752131062, guid: fd4cd0ea48cde9d43b2c77f46828d53f, type: 3}
+  currentSpawnRate: 0
 --- !u!4 &319356151
 Transform:
   m_ObjectHideFlags: 0
@@ -559,7 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af117d9f1c814704f870b9ce32476e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FuelTankSpawner
-  spawnChancePerChunk: 0.4
+  spawnChancePerChunk: 0.45
   fuelTankPrefab: {fileID: 2495573673736666504, guid: cf0f20cd72130b74990404e3030518f2, type: 3}
 --- !u!4 &370042952
 Transform:
@@ -6787,8 +6841,8 @@ MonoBehaviour:
   - {fileID: 239290590}
   minSpawnInterval: 2
   maxSpawnInterval: 8
-  minLaneFireChance: 0.1
-  maxLaneFireChance: 0.5
+  defaultMinLaneFireChance: 0.1
+  defaultMaxLaneFireChance: 0.5
   missileExtraSpeed: 8
   missileLifeTime: 5
   spawnForwardDistance: 40
@@ -7443,12 +7497,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295018446}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.24635, y: -0, z: 0.62607}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 29.18618, y: 0, z: -1.04255}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1644137777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1296817221
 GameObject:
@@ -8368,12 +8422,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549184483}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.24635, y: -0, z: 0.62607}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 29.18618, y: 0, z: -1.04255}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1644137777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1568157841
 GameObject:
@@ -13280,6 +13334,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b9e86cc256c97c4295daf8e4b8109ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissileLaneWarning
+--- !u!1 &1644137776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644137777}
+  m_Layer: 0
+  m_Name: GameSystems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644137777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644137776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.93983, y: -0, z: 1.66862}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1295018448}
+  - {fileID: 1549184485}
+  - {fileID: 79452691}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1671200182 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -2569908275300686455, guid: 3985b7d3bb5aac146b441d8af15e30d8, type: 3}
@@ -13854,7 +13942,7 @@ RectTransform:
   m_GameObject: {fileID: 1905604573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 13.91, y: 13.91, z: 13.91}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1112152726}
@@ -14039,6 +14127,14 @@ PrefabInstance:
       propertyPath: globalVolume
       value: 
       objectReference: {fileID: 74146075}
+    - target: {fileID: 8322805590684459774, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: fuelDrainPerSecond
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322805590684459774, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: gameOverController
+      value: 
+      objectReference: {fileID: 9148918808650652038}
     - target: {fileID: 8853067379656503921, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
       propertyPath: targetCamera
       value: 
@@ -14265,5 +14361,4 @@ SceneRoots:
   - {fileID: 877934079}
   - {fileID: 1112152726}
   - {fileID: 1131492314}
-  - {fileID: 1295018448}
-  - {fileID: 1549184485}
+  - {fileID: 1644137777}
