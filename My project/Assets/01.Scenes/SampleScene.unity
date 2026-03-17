@@ -14083,6 +14083,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2823787998718460608, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: overdriveFOV
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823787998718460608, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: playerScoreSystem
+      value: 
+      objectReference: {fileID: 9148918808650652033}
+    - target: {fileID: 2823787998718460608, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: overdriveForwardMultiplier
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4406004378671871177, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -14136,9 +14148,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9148918808650652038}
     - target: {fileID: 8853067379656503921, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: boostedFOV
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853067379656503921, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 5783482698900233757}
+    - target: {fileID: 8853067379656503921, guid: b95f1da9e5c35e64e8fd918bdecbc2c7, type: 3}
+      propertyPath: boostForwardMulti
+      value: 1.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e306ab3865369c4fb9d7db4806021b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FuelTankItem
-  recoverAmount: 25
+  recoverAmount: 20
   playerTag: Player
 --- !u!54 &4929473258311264036
 Rigidbody:

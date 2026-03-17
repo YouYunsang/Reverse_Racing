@@ -14,9 +14,9 @@ public class DifficultyManager : MonoBehaviour
 
     [Header("Missile Difficulty")]
     [SerializeField] private float missileBaseMinChance = 0.10f;
-    [SerializeField] private float missileIncreasePerStep = 0.05f;
-    [SerializeField] private float missileMaxMinChance = 0.35f;
-    [SerializeField] private float missileMaxChance = 0.50f;
+    [SerializeField] private float missileIncreasePerStep = 0.06f;
+    [SerializeField] private float missileMaxMinChance = 0.40f;
+    [SerializeField] private float missileMaxChance = 0.55f;
 
     [Header("Progress")]
     [SerializeField] private float distancePerStep = 500f;
